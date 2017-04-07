@@ -1,10 +1,16 @@
 package inova.lk.com.librarytestapp.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import inova.lk.com.inapplibrary.dialog.FullScreenBannerDialogFragment;
 import inova.lk.com.inapplibrary.util.Utility;
@@ -40,8 +46,34 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videoBanner.setOnClickListener(this);
         allBanners.setOnClickListener(this);
 
-//        FullScreenBannerDialogFragment fullScreenBannerDialogFragment = new FullScreenBannerDialogFragment();
-//        fullScreenBannerDialogFragment.show(getSupportFragmentManager(), TAG);
+//        LayoutInflater inflater = getLayoutInflater();
+//        View layout = inflater.inflate(R.layout.dialog_layout, null);
+//        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(Utility.dpToPx(300), Utility.dpToPx(50));//  Utils.toDIP(activity, BANNER_HEIGHT));
+//        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+//        layoutParams.setMargins(0, Utility.getActionBarSize(this), 0, 0);
+//        getWindow().addContentView(layout, layoutParams);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST);
+//
+//        WindowManager.LayoutParams wmlp = getWindow().getAttributes();
+//        wmlp.x = 0;   //x position
+//        int actionBarHeight = Utility.getActionBarSize(this);
+//        if (actionBarHeight != -1) {
+//            wmlp.y = actionBarHeight;   //y position
+//        }
+//
+//        View layout1 = inflater.inflate(R.layout.dialog_layout, null);
+//        FrameLayout.LayoutParams layoutParams1 = new FrameLayout.LayoutParams(Utility.dpToPx(300), Utility.dpToPx(50));//  Utils.toDIP(activity, BANNER_HEIGHT));
+//        layoutParams1.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+//        layoutParams1.setMargins(0, Utility.getActionBarSize(this), 0, 0);
+//        getWindow().addContentView(layout1, layoutParams1);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST);
+//
+//        WindowManager.LayoutParams wmlp1 = getWindow().getAttributes();
+//        wmlp1.x = 0;   //x position
+//        int actionBarHeight1 = Utility.getActionBarSize(this);
+//        if (actionBarHeight1 != -1) {
+//            wmlp1.y = actionBarHeight;   //y position
+//        }
     }
 
 

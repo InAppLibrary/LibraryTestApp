@@ -9,6 +9,16 @@
     <WebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
+        android:visibility="gone"
         android:layout_height="match_parent">
     </WebView>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:layout_margin="20dp"
+        android:hint="Enter Name"
+        android:focusableInTouchMode="true"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>

@@ -12,15 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import inova.lk.com.inapplibrary.R;
 import inova.lk.com.inapplibrary.dialog.FullScreenBannerDialogFragment;
+import inova.lk.com.inapplibrary.dialog.TestBannerDialogFragment;
 import inova.lk.com.inapplibrary.ui.CustomWebView;
 import io.swagger.client.model.AdvertisementResponse;
 
@@ -102,83 +106,136 @@ public class Utility {
 ////        dialog.show();
 //    }
 
-    public static void bannerTopBottom(final Activity activity, boolean isTopBanner, AdvertisementResponse advertisementResponse) {
+    public static void bannerTopBottom(final Activity activity, boolean isTopBanner, AdvertisementResponse advertisementResponse){
 
-        final Dialog dialog = new Dialog(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.dialog_layout, null);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(Utility.dpToPx(300), Utility.dpToPx(50));//  Utils.toDIP(activity, BANNER_HEIGHT));
+        activity.getWindow().addContentView(layout, layoutParams);
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST);
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_dialog_layout);
-        dialog.setCancelable(false);
-
-        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    activity.onBackPressed();
-                }
-                return true;
-            }
-        });
-
-        Window window = dialog.getWindow();
-        window.setFlags(
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-        );
-
-        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-        wmlp.width = Utility.dpToPx(320);
-        wmlp.height = Utility.dpToPx(50);
-//        wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
-
-        CustomWebView customWebView = (CustomWebView) dialog.findViewById(R.id.customWebView);
-        customWebView.getWebView().setWebChromeClient(new WebChromeClient(){
-
-            public void onProgressChanged(WebView view, int progress) {
-                if(progress == 100){
-
-                    if(dialog != null && !dialog.isShowing())
-                        dialog.show();
-                }
-            }
-        });
-
-        customWebView.setUrl(advertisementResponse);
+        WindowManager.LayoutParams wmlp = activity.getWindow().getAttributes();
+        wmlp.x = 0;   //x position
 
         if(isTopBanner){
 
-            customWebView.setAddType("0");
-            wmlp.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
-            wmlp.x = 0;   //x position
-
-            int actionBarHeight = getActionBarSize(activity);
+            wmlp.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+            int actionBarHeight = Utility.getActionBarSize(activity);
             if (actionBarHeight != -1) {
                 wmlp.y = actionBarHeight;   //y position
             }
         }else {
 
-            customWebView.setAddType("1");
             wmlp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
-            wmlp.x = 0;   //x position
         }
 
+        CustomWebView customWebView = (CustomWebView) layout.findViewById(R.id.customWebView);
+        ImageView closeView = (ImageView) layout.findViewById(R.id.imageViewClose);
 
-        ImageView closeView = (ImageView) dialog.findViewById(R.id.imageViewClose);
+        customWebView.setUrl(advertisementResponse);
         closeView.setOnClickListener(
+
                 new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
 
-                        dialog.dismiss();
+                        ((ViewGroup) layout.getParent()).removeView(layout);
                     }
                 });
 
-//        dialog.show();
+
+
     }
+
+
+//    public static void bannerTopBottom(final Activity activity, boolean isTopBanner, AdvertisementResponse advertisementResponse) {
+//
+//        final Dialog dialog = new Dialog(activity);
+//
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        dialog.setContentView(R.layout.custom_dialog_layout);
+//        dialog.setCancelable(false);
+//
+//        dialog.getWindow().setSoftInputMode(
+//                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+//
+//        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+//
+//            @Override
+//            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                    activity.onBackPressed();
+//                }
+//                return true;
+//            }
+//        });
+//
+//        Window window = dialog.getWindow();
+//        window.setFlags(
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+//        );
+//
+//        window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+//        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//        //----------------------------
+//        window.setFlags(WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH, WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH);
+////        window.setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM, WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+//////        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+////        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED);
+//        //----------------------------
+//
+//        WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+//        wmlp.width = Utility.dpToPx(320);
+//        wmlp.height = Utility.dpToPx(50);
+////        wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//
+//        CustomWebView customWebView = (CustomWebView) dialog.findViewById(R.id.customWebView);
+//        customWebView.getWebView().setWebChromeClient(new WebChromeClient(){
+//
+//            public void onProgressChanged(WebView view, int progress) {
+//                if(progress == 100){
+//
+//                    if(dialog != null && !dialog.isShowing())
+//                        dialog.show();
+//                }
+//            }
+//        });
+//
+//        customWebView.setUrl(advertisementResponse);
+//
+//        if(isTopBanner){
+//
+//            customWebView.setAddType("0");
+//            wmlp.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+//            wmlp.x = 0;   //x position
+//
+//            int actionBarHeight = getActionBarSize(activity);
+//            if (actionBarHeight != -1) {
+//                wmlp.y = actionBarHeight;   //y position
+//            }
+//        }else {
+//
+//            customWebView.setAddType("1");
+//            wmlp.gravity = Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL;
+//            wmlp.x = 0;   //x position
+//        }
+//
+//
+//        ImageView closeView = (ImageView) dialog.findViewById(R.id.imageViewClose);
+//        closeView.setOnClickListener(
+//                new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+////        dialog.show();
+//    }
 
     public static void hideSystemUI(Activity activity) {
 

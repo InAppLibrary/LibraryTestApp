@@ -2,8 +2,13 @@ package inova.lk.com.librarytestapp.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 
 import inova.lk.com.inapplibrary.ads.AdRequest;
 import inova.lk.com.inapplibrary.util.Utility;
@@ -46,6 +51,21 @@ public class SecondaryActivity extends AppCompatActivity {
             case R.id.allBanners:
                 allBanners();
                 break;
+        }
+
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.dialog_layout, null);
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(Utility.dpToPx(300), Utility.dpToPx(50));//  Utils.toDIP(activity, BANNER_HEIGHT));
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+        layoutParams.setMargins(0, Utility.getActionBarSize(this), 0, 0);
+        getWindow().addContentView(layout, layoutParams);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST);
+
+        WindowManager.LayoutParams wmlp = getWindow().getAttributes();
+        wmlp.x = 0;   //x position
+        int actionBarHeight = Utility.getActionBarSize(this);
+        if (actionBarHeight != -1) {
+            wmlp.y = actionBarHeight;   //y position
         }
     }
 

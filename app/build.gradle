@@ -36,6 +36,5 @@ dependencies {
     compile "com.android.volley:volley:${volley_version}"
     compile "com.google.code.gson:gson:$gson_version"
     compile 'com.android.support:appcompat-v7:25.0.0'
-    compile project(':library')
-//    compile 'com.github.inapplibrary:LibraryTestApp:0.0.1'
+    compile 'com.github.inapplibrary:LibraryTestApp:0.0.2'
 }
