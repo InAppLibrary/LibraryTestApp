@@ -143,9 +143,6 @@ public class Utility {
                         ((ViewGroup) layout.getParent()).removeView(layout);
                     }
                 });
-
-
-
     }
 
 
