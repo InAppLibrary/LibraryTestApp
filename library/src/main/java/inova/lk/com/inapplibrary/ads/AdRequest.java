@@ -112,7 +112,10 @@ public class AdRequest {
         @Override
         protected void onPostExecute(AdvertisementResponse advertisementResponse) {
 
-            if (null != advertisementResponse){
+            if (null != advertisementResponse &&
+                    null != advertisementResponse.getResponseObject() &&
+                    null != advertisementResponse.getResponseObject().getContent() &&
+                    !advertisementResponse.getResponseObject().getContent().isEmpty()){
 
                 Log.d(TAG, advertisementResponse.getState().toString());
                 Log.d(TAG, advertisementResponse.getMsg());
