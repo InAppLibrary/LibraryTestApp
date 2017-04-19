@@ -66,7 +66,24 @@ public class FullScreenBannerDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
 
-                        dismiss();
+                        if(customWebView != null) {
+
+                            customWebView.removeAllViews();
+                            WebView webView = customWebView.getWebView();
+
+                            if(null != webView) {
+
+//                                webView.clearHistory();
+//                                webView.clearCache(true);
+                                webView.loadUrl("about:blank");
+//                                webView.freeMemory();
+//                                webView.pauseTimers();
+                                webView = null;
+                            }
+                        }
+
+//                        dismiss();
+                        dismissAllowingStateLoss();
                     }
                 });
 
@@ -114,28 +131,5 @@ public class FullScreenBannerDialogFragment extends DialogFragment {
             wmlp.width = WindowManager.LayoutParams.MATCH_PARENT;
             wmlp.height = WindowManager.LayoutParams.MATCH_PARENT;
         }
-    }
-
-    @Override
-    public void onStop() {
-
-        super.onStop();
-        customWebView.removeAllViews();
-
-        if(customWebView != null) {
-
-            WebView webView = customWebView.getWebView();
-
-            if(null != webView) {
-
-                webView.clearHistory();
-                webView.clearCache(true);
-                webView.loadUrl("about:blank");
-                webView.freeMemory();
-                webView.pauseTimers();
-                webView = null;
-            }
-        }
-
     }
 }

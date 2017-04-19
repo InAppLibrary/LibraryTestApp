@@ -24,7 +24,7 @@ import io.swagger.client.model.AdvertisementResponse;
  * Created by Milan on 2/16/17.
  */
 
-public class CustomWebView extends RelativeLayout implements View.OnTouchListener{
+public class CustomWebView extends RelativeLayout implements View.OnTouchListener {
 
     private WebView myWebView;
     String addType;
@@ -100,7 +100,7 @@ public class CustomWebView extends RelativeLayout implements View.OnTouchListene
 
             this.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             myWebView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        }else if (Integer.parseInt(addType) == 4) {
+        } else if (Integer.parseInt(addType) == 4) {
 
             this.setLayoutParams(this.getLayoutParams());
             myWebView.setLayoutParams(new LayoutParams(Utility.dpToPx(200), Utility.dpToPx(200)));
@@ -141,7 +141,7 @@ public class CustomWebView extends RelativeLayout implements View.OnTouchListene
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
 
-        if(motionEvent.getAction() == MotionEvent.ACTION_DOWN && null != advertisementResponse && null != advertisementResponse.getResponseObject() && null != advertisementResponse.getResponseObject().getUrl()) {
+        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN && null != advertisementResponse && null != advertisementResponse.getResponseObject() && null != advertisementResponse.getResponseObject().getUrl()) {
 
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(advertisementResponse.getResponseObject().getUrl()));
             context.startActivity(browserIntent);
